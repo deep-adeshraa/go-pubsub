@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package mypubsub;
+
+option go_package = ".";
+
+
+message PubSubMessage {
+    string topic = 1;
+    bytes data = 2;
+}
+
+message PublishRequest {
+    string topic = 1;
+    bytes data = 2;
+}
+
+message PublishResponse {
+    string topic = 1;
+    bytes data = 2;
+}
+
+message SubscribeRequest {
+    string topic = 1;
+    string subscriber_id = 2;
+}
+
+message UnsubscribeRequest {
+    string topic = 1;
+    string subscriber_id = 2;
+}
+
+message Empty {
+
+}
+
+service PubSubService {
+    rpc Publish(PublishRequest) returns (PublishResponse) {}
+    rpc Subscribe(SubscribeRequest) returns (stream PubSubMessage) {}
+    rpc Unsubscribe(UnsubscribeRequest) returns (Empty) {}
+}
